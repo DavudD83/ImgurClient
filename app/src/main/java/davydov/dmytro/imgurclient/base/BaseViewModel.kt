@@ -4,6 +4,6 @@ import androidx.lifecycle.ViewModel
 
 
 abstract class BaseViewModel : ViewModel() {
-    fun onViewCreated() {}
-    fun onViewDestroyed() {}
+    open fun onViewCreated() {}
+    open fun onViewDestroyed() {}
 }
