@@ -7,6 +7,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import davydov.dmytro.imgurclient.root.RootViewModel
 import davydov.dmytro.imgurclient.root.TokensService
 import davydov.dmytro.imgurclient.root.UserExistenceInteractor
+import davydov.dmytro.imgurclient.root.loggedIn.LoggedInViewModel
+import davydov.dmytro.imgurclient.root.loggedOut.LoggedOutViewModel
 import java.lang.IllegalArgumentException
 
 //TODO Setup DI here later
@@ -25,9 +27,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
 
                 viewModel
             }
-            else -> {
-              throw IllegalArgumentException("Unknown model class")
-            }
+            LoggedOutViewModel::class.java -> { LoggedOutViewModel() }
+            LoggedInViewModel::class.java -> { LoggedInViewModel() }
+            else -> { throw IllegalArgumentException("Unknown model class") }
         } as T
     }
 }
