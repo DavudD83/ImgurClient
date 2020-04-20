@@ -1,12 +1,15 @@
-package davydov.dmytro.imgurclient.root
+package davydov.dmytro.imgurclient.root.tokensService
 
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import davydov.dmytro.imgurclient.base.Optional
+import davydov.dmytro.imgurclient.root.RootScope
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.processors.BehaviorProcessor
+import javax.inject.Inject
 
-class TokensService(
+@RootScope
+class TokensService @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val objectMapper: ObjectMapper
 ) {

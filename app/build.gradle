@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def localProperties = new Properties()
 project.rootProject.file('local.properties').newDataInputStream().withCloseable { fileInputStream ->
@@ -70,5 +71,5 @@ dependencies {
 
     def dagger_version = "2.27"
     implementation "com.google.dagger:dagger:${dagger_version}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${dagger_version}"
+    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
 }

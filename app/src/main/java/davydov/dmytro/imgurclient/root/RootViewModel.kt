@@ -3,8 +3,10 @@ package davydov.dmytro.imgurclient.root
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import davydov.dmytro.imgurclient.base.BaseViewModel
+import javax.inject.Inject
 
-class RootViewModel(private val userExistenceInteractor: UserExistenceInteractor) : BaseViewModel(),
+@RootScope
+class RootViewModel @Inject constructor(private val userExistenceInteractor: UserExistenceInteractor) : BaseViewModel(),
     UserExistenceInteractor.Listener {
 
     private val _rootState = MutableLiveData<RootState>()
