@@ -56,16 +56,23 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
 
     private fun loadUrlInDialog(url: String) {
         if (authDialog == null) {
-            Dialog(requireContext())
+            Dialog(requireContext(), R.style.OAuthDialogTheme)
                 .apply {
                     setContentView(R.layout.layout_oauth_dialog)
                     show()
+
+                    window!!.decorView.alpha = 0f
 
                     setOnDismissListener { authDialog = null }
 
                     findViewById<WebView>(R.id.webView)?.run {
                         webViewClient = object: WebViewClient() {
-                            override fun onPageFinished(view: WebView?, url: String) {
+                            override fun onPageFinished(view: WebView, url: String) {
+                                window!!
+                                    .decorView
+                                    .animate()
+                                    .alpha(1f)
+
                                 viewModel.onWebViewPageLoaded(url)
                             }
 
