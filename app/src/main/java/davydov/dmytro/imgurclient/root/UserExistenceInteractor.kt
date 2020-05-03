@@ -1,10 +1,13 @@
 package davydov.dmytro.imgurclient.root
 
+import davydov.dmytro.imgurclient.root.tokensService.TokensService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
 
-class UserExistenceInteractor(
+@RootScope
+class UserExistenceInteractor @Inject constructor(
     private val tokensService: TokensService
 ) {
     lateinit var listener: Listener

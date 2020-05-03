@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def localProperties = new Properties()
 project.rootProject.file('local.properties').newDataInputStream().withCloseable { fileInputStream ->
@@ -67,4 +68,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0"
+
+    def dagger_version = "2.27"
+    implementation "com.google.dagger:dagger:${dagger_version}"
+    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
 }

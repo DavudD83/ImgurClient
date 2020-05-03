@@ -1,4 +1,4 @@
-package davydov.dmytro.imgurclient.root
+package davydov.dmytro.imgurclient.root.tokensService
 
 
 data class Tokens(
