@@ -11,7 +11,8 @@ class OAuthUrlCallbackParser @Inject constructor() {
 
         val results = uri.fragment
             ?.split("&")
-            ?.associateBy({ it.split("=")[0] }, { it.split("=")[1] })
+            ?.map { it.split("=") }
+            ?.associateBy( { it[0] }, { it[1] } )
 
         return if (results?.contains(ACCESS_TOKEN_KEY) == true && results.contains(
                 REFRESH_TOKEN_KEY

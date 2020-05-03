@@ -72,6 +72,9 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
                                     .decorView
                                     .animate()
                                     .alpha(1f)
+                                    .apply {
+                                        duration = WEB_VIEW_ANIM_TIME
+                                    }
 
                                 viewModel.onWebViewPageLoaded(url)
                             }
@@ -101,5 +104,7 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
 
     companion object {
         fun newInstance() = LoggedOutFragment()
+
+        private const val WEB_VIEW_ANIM_TIME = 200L
     }
 }
