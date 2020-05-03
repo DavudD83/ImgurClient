@@ -20,6 +20,7 @@ interface ApplicationComponent {
 
     fun objectMapper(): ObjectMapper
     fun sharedPref(): SharedPreferences
+    fun context(): Context
 
     @Component.Builder
     interface Builder {

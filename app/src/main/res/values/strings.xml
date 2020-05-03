@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ImgurClient</string>
+    <string name="auth_error">Произошла ошибка при авторизации. Повторите попытку</string>
 </resources>
