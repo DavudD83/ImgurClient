@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">ImgurClient</string>
-    <string name="auth_error">Something went wrong during authorization. Please try again.</string>
 </resources>
