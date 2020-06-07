@@ -8,7 +8,7 @@ import javax.inject.Inject
 class LoggedInRouterImpl @Inject constructor() : LoggedInRouter {
     override fun moveToLoggedIn(containerId: Int, fragmentManager: FragmentManager) {
         fragmentManager.beginTransaction()
-            .add(containerId, LoggedInFragment.newInstance())
+            .replace(containerId, LoggedInFragment.newInstance())
             .commit()
     }
 }

@@ -6,12 +6,13 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.galleries.di.ItemDecorator
+import com.example.core_ui.ItemDecorator
+import com.example.core_ui.doOnApplyInsets
+import com.example.core_ui.dpToPx
 import com.example.galleries.R
 import com.example.galleries.di.DaggerGalleriesComponent
 import com.example.network.WithGalleriesApiProvider
 import davydov.dmytro.core.BaseFragment
-import davydov.dmytro.core.dpToPx
 import davydov.dmytro.core_api.AppWithFacade
 import kotlinx.android.synthetic.main.fragment_galleries.*
 import kotlin.math.roundToInt
@@ -42,7 +43,7 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
         )
         galleries.layoutManager = GridLayoutManager(context, spanCount)
 
-        requireActivity().window.decorView.setOnApplyWindowInsetsListener { v, insets ->
+        requireActivity().window.decorView.doOnApplyInsets { v, insets ->
             val heightOfScreen = v.height - insets.systemWindowInsetTop - insets.systemWindowInsetBottom
 
             val viewHolderWidth = v.measuredWidth / spanCount - itemOffset
@@ -55,8 +56,6 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
 
             insets
         }
-
-        requireActivity().window.decorView.requestApplyInsets()
 
         viewModel.galleries.observe(viewLifecycleOwner, Observer { items ->
             loading.isVisible = false
@@ -73,6 +72,11 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
             initialError.isVisible = true
             initialError.text = it
         })
+    }
+
+    override fun onDestroyView() {
+        requireActivity().window.decorView.setOnApplyWindowInsetsListener(null)
+        super.onDestroyView()
     }
 
     companion object {

@@ -10,7 +10,9 @@ import dagger.Provides
 import davydov.dmytro.core_api.Injector
 import davydov.dmytro.core_api.ProvidersFacade
 import davydov.dmytro.tokens.TokensServiceProvider
-import okhttp3.OkHttpClient
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.internal.http.RealResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -18,7 +20,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Scope
 
 
-@Component(modules = [NetworkModule::class], dependencies = [ProvidersFacade::class, TokensServiceProvider::class])
+@Component(
+    modules = [NetworkModule::class],
+    dependencies = [ProvidersFacade::class, TokensServiceProvider::class]
+)
 @LoggedInScope
 interface LoggedInComponent : Injector<LoggedInFragment>, GalleriesApiProvider
 
@@ -27,10 +32,14 @@ class NetworkModule {
 
     @Provides
     @LoggedInScope
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        loggedOutInterceptor: LoggedOutInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .addInterceptor(HttpLoggingInterceptor(object: HttpLoggingInterceptor.Logger {
+            .addInterceptor(loggedOutInterceptor)
+            .addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
                     Log.d("HTTP", message)
                 }

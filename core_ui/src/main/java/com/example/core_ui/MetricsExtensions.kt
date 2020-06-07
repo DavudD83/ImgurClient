@@ -1,4 +1,4 @@
-package davydov.dmytro.core
+package com.example.core_ui
 
 import android.content.res.Resources
 import kotlin.math.roundToInt

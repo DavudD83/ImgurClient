@@ -1,10 +1,9 @@
-package com.example.galleries.di
+package com.example.core_ui
 
 import android.graphics.Rect
 import android.view.View
 import androidx.annotation.Px
 import androidx.recyclerview.widget.RecyclerView
-import davydov.dmytro.core.dpToPx
 
 class ItemDecorator(
     @Px private val offsetLeft: Int = DEFAULT_OFFSET,
