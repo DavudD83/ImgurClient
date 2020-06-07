@@ -75,8 +75,8 @@ class GalleriesViewModel @Inject constructor(
                     id,
                     title,
                     coverImageUrl,
-                    upVotes.toString(),
-                    downVotes.toString(),
+                    getViewStrFor(upVotes),
+                    getViewStrFor(downVotes),
                     getViewStrFor(views)
                 )
             }

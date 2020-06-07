@@ -15,8 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,79 +52,52 @@
 
             tools:text="Some fancy name" />
 
-        <ImageView
-            android:id="@+id/upImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_arrow_up"
-
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
-
         <TextView
             android:id="@+id/ups"
             style="@style/SmallTextStyle"
 
-            app:layout_constraintBottom_toBottomOf="@id/upImg"
+            android:drawableStart="@drawable/ic_arrow_up"
+            android:gravity="center"
 
+            android:layout_marginTop="4dp"
+            android:paddingStart="0dp"
 
+            app:layout_constraintVertical_chainStyle="spread"
 
-            app:layout_constraintEnd_toStartOf="@id/downImg"
-            app:layout_constraintStart_toEndOf="@id/upImg"
-            app:layout_constraintTop_toTopOf="@id/upImg"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
 
-            tools:text="434" />
-
-        <ImageView
-            android:id="@+id/downImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:src="@drawable/ic_arrow_down"
-
-            app:layout_constraintHorizontal_chainStyle="spread"
-
-            app:layout_constraintStart_toEndOf="@id/ups"
-            app:layout_constraintTop_toTopOf="@id/upImg" />
+            tools:text="999" />
 
         <TextView
             android:id="@+id/downs"
             style="@style/SmallTextStyle"
 
-            app:layout_constraintBottom_toBottomOf="@id/downImg"
-            app:layout_constraintEnd_toStartOf="@id/viewsImg"
-            app:layout_constraintStart_toEndOf="@id/downImg"
-            app:layout_constraintTop_toTopOf="@id/downImg"
+            android:drawableStart="@drawable/ic_arrow_down"
 
-            tools:text="110" />
+            app:layout_constraintVertical_chainStyle="spread"
 
-        <ImageView
-            android:id="@+id/viewsImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/views"
+            app:layout_constraintTop_toTopOf="@id/ups"
+            app:layout_constraintStart_toEndOf="@id/ups"
 
-            android:src="@drawable/ic_views"
-
-
-            app:layout_constraintStart_toEndOf="@id/downs"
-            app:layout_constraintTop_toTopOf="@id/downImg" />
+            tools:text="999" />
 
         <TextView
             android:id="@+id/views"
             style="@style/SmallTextStyle"
 
-            app:layout_constraintBottom_toBottomOf="@id/viewsImg"
+            android:drawableStart="@drawable/ic_views"
+
+            android:drawablePadding="4dp"
+
+            app:layout_constraintVertical_chainStyle="spread"
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@id/viewsImg"
-            app:layout_constraintTop_toTopOf="@id/viewsImg"
-            tools:text="33K" />
+            app:layout_constraintTop_toTopOf="@id/downs"
+            app:layout_constraintStart_toEndOf="@id/downs"
+
+            tools:text="999K" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
