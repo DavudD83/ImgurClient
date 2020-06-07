@@ -18,11 +18,15 @@ class GalleriesAdapter(private val viewHolderWidth: Int, private val viewHolderH
     ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryListVH {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        return GalleryListVH(
-            view,
-            viewHolderWidth,
-            viewHolderHeight
-        )
+
+        if (viewType == R.layout.item_gallery) {
+            view.image.updateLayoutParams {
+                width = viewHolderWidth
+                height = viewHolderHeight
+            }
+        }
+
+        return GalleryListVH(view)
     }
 
     override fun onBindViewHolder(holder: GalleryListVH, position: Int) {
@@ -63,15 +67,8 @@ object GalleryListDiffUtilCallback : DiffUtil.ItemCallback<GalleryListItem>() {
     }
 }
 
-class GalleryListVH(itemView: View, private val widthImg: Int, private val heightImg: Int) :
+class GalleryListVH(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
-
-    init {
-        itemView.image.updateLayoutParams {
-            width = widthImg
-            height = heightImg
-        }
-    }
 
     fun bind(galleryListItem: GalleryListItem) {
         when (galleryListItem) {
