@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def localProperties = new Properties()
+
+project.rootProject.file('local.properties').newDataInputStream().withCloseable { inputStream ->
+    localProperties.load(inputStream)
+}
+
+def IMGUR_CLIENT_ID = localProperties['imgurClientId']
+
 android {
     compileSdkVersion 29
 
@@ -15,6 +23,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        buildConfigField "String", "IMGUR_CLIENT_ID", IMGUR_CLIENT_ID
     }
 
     buildTypes {
@@ -39,5 +49,13 @@ dependencies {
     implementation "com.google.dagger:dagger:${dagger_version}"
     kapt "com.google.dagger:dagger-compiler:${dagger_version}"
 
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:${retrofit_version}"
+    implementation "com.squareup.retrofit2:converter-jackson:${retrofit_version}"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+
     implementation project(':core')
+    implementation project(':network')
+    implementation project(':tokens')
 }

@@ -32,6 +32,9 @@ class TokensServiceImpl @Inject constructor(
         tokensProcessor.onNext(Optional(tokens))
     }
 
+    override val peekTokens: Tokens?
+        get() = tokensProcessor.value?.value
+
     companion object {
         private const val KEY_TOKENS = "KEY_TOKENS"
     }

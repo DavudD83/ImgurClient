@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:scaleType="center"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        tools:src="@tools:sample/avatars" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:background="@color/grey"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            tools:text="Some fancy name" />
+
+        <ImageView
+            android:id="@+id/upImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_arrow_up"
+
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/ups"
+            style="@style/SmallTextStyle"
+
+            app:layout_constraintBottom_toBottomOf="@id/upImg"
+
+
+
+            app:layout_constraintEnd_toStartOf="@id/downImg"
+            app:layout_constraintStart_toEndOf="@id/upImg"
+            app:layout_constraintTop_toTopOf="@id/upImg"
+
+            tools:text="434" />
+
+        <ImageView
+            android:id="@+id/downImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ic_arrow_down"
+
+            app:layout_constraintHorizontal_chainStyle="spread"
+
+            app:layout_constraintStart_toEndOf="@id/ups"
+            app:layout_constraintTop_toTopOf="@id/upImg" />
+
+        <TextView
+            android:id="@+id/downs"
+            style="@style/SmallTextStyle"
+
+            app:layout_constraintBottom_toBottomOf="@id/downImg"
+            app:layout_constraintEnd_toStartOf="@id/viewsImg"
+            app:layout_constraintStart_toEndOf="@id/downImg"
+            app:layout_constraintTop_toTopOf="@id/downImg"
+
+            tools:text="110" />
+
+        <ImageView
+            android:id="@+id/viewsImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ic_views"
+
+
+            app:layout_constraintStart_toEndOf="@id/downs"
+            app:layout_constraintTop_toTopOf="@id/downImg" />
+
+        <TextView
+            android:id="@+id/views"
+            style="@style/SmallTextStyle"
+
+            app:layout_constraintBottom_toBottomOf="@id/viewsImg"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@id/viewsImg"
+            app:layout_constraintTop_toTopOf="@id/viewsImg"
+            tools:text="33K" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
