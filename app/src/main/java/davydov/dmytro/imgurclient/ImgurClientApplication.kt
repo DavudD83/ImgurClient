@@ -6,12 +6,18 @@ import davydov.dmytro.core_api.ProvidersFacade
 import davydov.dmytro.localstorage.AppWithSharedPrefProvider
 import davydov.dmytro.localstorage.LocalStorageComponentFactory
 import davydov.dmytro.localstorage.SharedPreferencesProvider
+import timber.log.Timber
 
 
 class ImgurClientApplication : Application(), AppWithFacade, AppWithSharedPrefProvider {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
         DaggerApplicationComponent
             .builder()
             .context(this)

@@ -55,6 +55,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-jackson:${retrofit_version}"
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     implementation project(':core')
     implementation project(':network')
     implementation project(':tokens')

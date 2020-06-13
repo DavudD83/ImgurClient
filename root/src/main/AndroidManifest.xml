@@ -3,7 +3,8 @@
 
 
     <application>
-        <activity android:name="davydov.dmytro.root.RootActivity">
+        <activity android:name="davydov.dmytro.root.RootActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

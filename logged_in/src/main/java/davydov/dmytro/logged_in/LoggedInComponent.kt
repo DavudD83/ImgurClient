@@ -1,6 +1,5 @@
 package davydov.dmytro.logged_in
 
-import android.util.Log
 import com.example.network.GalleriesApi
 import com.example.network.GalleriesApiProvider
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -9,14 +8,18 @@ import dagger.Module
 import dagger.Provides
 import davydov.dmytro.core_api.Injector
 import davydov.dmytro.core_api.ProvidersFacade
+import davydov.dmytro.logged_in.interceptors.ApiErrorInterceptor
+import davydov.dmytro.logged_in.interceptors.AuthInterceptor
+import davydov.dmytro.logged_in.interceptors.LoggedOutInterceptor
+import davydov.dmytro.logged_in.interceptors.NetworkErrorInterceptor
 import davydov.dmytro.tokens.TokensServiceProvider
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.internal.http.RealResponseBody
+import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
+import timber.log.Timber
 import javax.inject.Scope
 
 
@@ -34,14 +37,18 @@ class NetworkModule {
     @LoggedInScope
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
-        loggedOutInterceptor: LoggedOutInterceptor
+        loggedOutInterceptor: LoggedOutInterceptor,
+        networkErrorInterceptor: NetworkErrorInterceptor,
+        apiErrorInterceptor: ApiErrorInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(networkErrorInterceptor)
+            .addInterceptor(apiErrorInterceptor)
             .addInterceptor(authInterceptor)
             .addInterceptor(loggedOutInterceptor)
             .addInterceptor(HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
-                    Log.d("HTTP", message)
+                    Timber.tag("HTTP").d(message)
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
@@ -54,7 +61,7 @@ class NetworkModule {
             .baseUrl("https://api.imgur.com/3/")
             .client(client)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
     }
 

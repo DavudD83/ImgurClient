@@ -1,5 +1,7 @@
-package davydov.dmytro.logged_in
+package davydov.dmytro.logged_in.interceptors
 
+import davydov.dmytro.logged_in.BuildConfig
+import davydov.dmytro.logged_in.LoggedInScope
 import davydov.dmytro.tokens.TokensService
 import okhttp3.Interceptor
 import okhttp3.Response

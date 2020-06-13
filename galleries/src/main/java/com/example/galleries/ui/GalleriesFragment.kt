@@ -4,12 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.core_ui.ItemDecorator
-import com.example.core_ui.RecyclerPaginationHelper
-import com.example.core_ui.doOnApplyInsets
-import com.example.core_ui.dpToPx
+import com.example.core_ui.*
 import com.example.galleries.R
 import com.example.galleries.di.DaggerGalleriesComponent
 import com.example.network.WithGalleriesApiProvider
@@ -51,9 +51,10 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
             )
         )
         galleries.layoutManager = GridLayoutManager(context, spanCount).apply {
-            spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    val isLoading = (galleries.adapter as GalleriesAdapter).currentList[position] is NewPageLoading
+                    val isLoading =
+                        (galleries.adapter as GalleriesAdapter).currentList[position] is NewPageLoading
                     return if (isLoading) {
                         2
                     } else {
@@ -63,8 +64,26 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
             }
         }
 
+        val lifecycleOfSizeCalculation = object : LifecycleOwner {
+            private val lifecycleRegistry = LifecycleRegistry(this)
+
+            override fun getLifecycle(): Lifecycle = lifecycleRegistry
+
+            fun handleDimensionsCalculated() {
+                lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
+            }
+        }
+
+        val customViewLifecycle = LifecycleMerger.create(
+            viewLifecycleOwner.lifecycle,
+            lifecycleOfSizeCalculation.lifecycle
+        )
+
         requireActivity().window.decorView.doOnApplyInsets { v, insets ->
-            val heightOfScreen = v.height - insets.systemWindowInsetTop - insets.systemWindowInsetBottom
+            v.setBackgroundColor(resources.getColor(R.color.dark))
+
+            val heightOfScreen =
+                v.measuredHeight - insets.systemWindowInsetTop - insets.systemWindowInsetBottom
 
             val viewHolderWidth = v.measuredWidth / spanCount - itemOffset
             val viewHolderHeight = (heightOfScreen / verticalSpanCount).roundToInt() - itemOffset
@@ -74,10 +93,12 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
                 viewHolderHeight
             )
 
+            lifecycleOfSizeCalculation.handleDimensionsCalculated()
+
             insets
         }
 
-        viewModel.galleries.observe(viewLifecycleOwner, Observer { items ->
+        viewModel.galleries.observe(customViewLifecycle, Observer { items ->
             loading.isVisible = false
             galleries.isVisible = true
             (galleries.adapter as GalleriesAdapter).submitList(items)

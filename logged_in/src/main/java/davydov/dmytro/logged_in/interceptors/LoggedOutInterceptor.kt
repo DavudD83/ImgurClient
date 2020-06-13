@@ -1,10 +1,9 @@
-package davydov.dmytro.logged_in
+package davydov.dmytro.logged_in.interceptors
 
+import davydov.dmytro.logged_in.LoggedInScope
 import davydov.dmytro.tokens.TokensService
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @LoggedInScope
@@ -15,7 +14,7 @@ class LoggedOutInterceptor @Inject constructor(private val tokensService: Tokens
         return if (response.code == FORBIDDEN) {
             //TODO refresh tokens here
             tokensService.saveTokens(null)
-            throw IOException("Logged out")
+            response
         } else {
             response
         }
