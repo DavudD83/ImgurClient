@@ -5,6 +5,7 @@ import android.content.res.Resources
 import com.example.galleries.ViralGalleriesRouterImpl
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import dagger.*
 import davydov.dmytro.auth.LoggedOutRouterImpl
@@ -38,6 +39,7 @@ class AppModule {
         return ObjectMapper()
             .registerModule(KotlinModule())
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
     }
 
     @Provides
