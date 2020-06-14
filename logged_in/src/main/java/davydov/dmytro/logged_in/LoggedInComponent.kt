@@ -14,6 +14,7 @@ import davydov.dmytro.logged_in.interceptors.LoggedOutInterceptor
 import davydov.dmytro.logged_in.interceptors.NetworkErrorInterceptor
 import davydov.dmytro.tokens.TokensServiceProvider
 import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -39,7 +40,8 @@ class NetworkModule {
         authInterceptor: AuthInterceptor,
         loggedOutInterceptor: LoggedOutInterceptor,
         networkErrorInterceptor: NetworkErrorInterceptor,
-        apiErrorInterceptor: ApiErrorInterceptor
+        apiErrorInterceptor: ApiErrorInterceptor,
+        certificatePinner: CertificatePinner
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(networkErrorInterceptor)
@@ -51,6 +53,15 @@ class NetworkModule {
                     Timber.tag("HTTP").d(message)
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
+            .certificatePinner(certificatePinner)
+            .build()
+    }
+
+    @Provides
+    @LoggedInScope
+    fun certificatePinner(): CertificatePinner {
+        return CertificatePinner.Builder()
+            .add("*.imgur.com", "sha256/67qfENcnm/SGGFJOb5ENkUThQ3rIk+YR4u6zbYxRMWA=")
             .build()
     }
 
