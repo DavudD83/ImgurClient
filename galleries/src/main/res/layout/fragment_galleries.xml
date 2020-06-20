@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/dark">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -10,13 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ProgressBar
+    <com.example.core_ui.LoadingDotsView
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        app:dotsColor="@android:color/white"
+        app:dotsCount="3"
+        app:dotSize="11dp"
+
         android:layout_gravity="center"
-        android:visibility="gone" />
+        />
 
     <TextView
         android:id="@+id/initialError"
