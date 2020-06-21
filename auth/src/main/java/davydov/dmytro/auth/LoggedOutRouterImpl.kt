@@ -8,7 +8,7 @@ import javax.inject.Inject
 class LoggedOutRouterImpl @Inject constructor() : LoggedOutRouter {
     override fun moveToLoggedOut(containerId: Int, fragmentManager: FragmentManager) {
         fragmentManager.beginTransaction()
-            .add(containerId, LoggedOutFragment.newInstance())
+            .replace(containerId, LoggedOutFragment.newInstance())
             .commit()
     }
 }

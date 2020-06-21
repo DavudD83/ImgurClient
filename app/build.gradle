@@ -68,9 +68,13 @@ dependencies {
     implementation "com.google.dagger:dagger:${dagger_version}"
     kapt "com.google.dagger:dagger-compiler:${dagger_version}"
 
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     implementation project(':auth')
     implementation project(':logged_in')
     implementation project(':core')
     implementation project(':local_storage')
     implementation project(':root')
+    implementation project(':galleries')
+    implementation project(':core_ui')
 }

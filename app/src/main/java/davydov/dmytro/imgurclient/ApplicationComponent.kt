@@ -2,8 +2,10 @@ package davydov.dmytro.imgurclient
 
 import android.content.Context
 import android.content.res.Resources
+import com.example.galleries.ViralGalleriesRouterImpl
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import dagger.*
 import davydov.dmytro.auth.LoggedOutRouterImpl
@@ -11,6 +13,7 @@ import davydov.dmytro.core_api.Injector
 import davydov.dmytro.core_api.ProvidersFacade
 import davydov.dmytro.core_api.routers.LoggedInRouter
 import davydov.dmytro.core_api.routers.LoggedOutRouter
+import davydov.dmytro.core_api.routers.ViralGalleriesRouter
 import davydov.dmytro.localstorage.SharedPreferencesProvider
 import davydov.dmytro.logged_in.LoggedInRouterImpl
 import javax.inject.Scope
@@ -36,6 +39,7 @@ class AppModule {
         return ObjectMapper()
             .registerModule(KotlinModule())
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
     }
 
     @Provides
@@ -52,6 +56,10 @@ abstract class RoutersBindings {
     @Binds
     @AppScope
     abstract fun loggedInRouter(impl: LoggedInRouterImpl): LoggedInRouter
+
+    @Binds
+    @AppScope
+    abstract fun viralGalleriesRouter(impl: ViralGalleriesRouterImpl): ViralGalleriesRouter
 }
 
 @Scope

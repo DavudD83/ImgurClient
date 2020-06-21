@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousandsViewsStr">%1$dK</string>
+    <string name="millionsViewStr">%1$dM</string>
+    <string name="initial_error">Something went wrong. Could not load galleries.</string>
+</resources>
