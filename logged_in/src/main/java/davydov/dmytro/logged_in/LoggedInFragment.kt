@@ -3,10 +3,7 @@ package davydov.dmytro.logged_in
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.example.network.ConnectivityServiceProvider
-import com.example.network.GalleriesApiProvider
-import com.example.network.WithGalleriesApiProvider
-import com.example.network.WithServiceProvider
+import com.example.network.*
 import davydov.dmytro.core.BaseFragment
 import davydov.dmytro.core_api.AppWithFacade
 import davydov.dmytro.core_api.routers.ViralGalleriesRouter
@@ -22,6 +19,9 @@ class LoggedInFragment : BaseFragment<LoggedInViewModel>(), WithGalleriesApiProv
 
     @Inject
     lateinit var viralGalleriesRouter: ViralGalleriesRouter
+
+    @Inject
+    lateinit var connectionStateService: ConnectionStateService
 
     private lateinit var component: LoggedInComponent
 
@@ -39,6 +39,11 @@ class LoggedInFragment : BaseFragment<LoggedInViewModel>(), WithGalleriesApiProv
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState ?: viralGalleriesRouter.moveToViralGalleries(R.id.container, childFragmentManager)
+    }
+
+    override fun onDestroy() {
+        connectionStateService.close()
+        super.onDestroy()
     }
 
     override fun provider(): GalleriesApiProvider = component
