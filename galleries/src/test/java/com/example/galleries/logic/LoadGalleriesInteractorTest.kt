@@ -1,6 +1,9 @@
 package com.example.galleries.logic
 
+import com.example.galleries.RxRule
+import com.example.galleries.anyNonNull
 import com.example.galleries.data.GalleriesService
+import com.example.galleries.provideGalleries
 import com.example.network.ConnectionStateService
 import com.example.network.model.NetworkError
 import io.reactivex.rxjava3.core.Single

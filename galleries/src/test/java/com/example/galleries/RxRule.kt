@@ -1,4 +1,4 @@
-package com.example.galleries.logic
+package com.example.galleries
 
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
