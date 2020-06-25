@@ -1,5 +1,6 @@
 package com.example.core_ui
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Paint
@@ -30,22 +31,33 @@ class LoadingDotsView @JvmOverloads constructor(
     private val desiredWidth: Int
     private val desiredHeight: Int
 
+    private val animators = mutableListOf<Animator>()
+
     init {
         orientation = HORIZONTAL
         gravity = Gravity.CENTER
 
-        context.obtainStyledAttributes(attributeSet, R.styleable.LoadingDotsView).apply {
-            dotColor = getColor(R.styleable.LoadingDotsView_dotsColor, defaultColor)
-            dotsCount = getInt(R.styleable.LoadingDotsView_dotsCount, DEFAULT_DOTS_COUNT)
-            dotSize = getDimensionPixelSize(R.styleable.LoadingDotsView_dotSize, defaultDotSize)
+        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.LoadingDotsView)
 
-            recycle()
+        try {
+            typedArray.run {
+                dotColor = getColor(R.styleable.LoadingDotsView_dotsColor, defaultColor)
+                dotsCount = getInt(R.styleable.LoadingDotsView_dotsCount, DEFAULT_DOTS_COUNT)
+                dotSize = getDimensionPixelSize(R.styleable.LoadingDotsView_dotSize, defaultDotSize)
+            }
+        } finally {
+            typedArray.recycle()
         }
 
         desiredHeight = (dotSize * DEFAULT_SCALE + defaultDotMargins * 2).roundToInt()
         desiredWidth = ((dotSize * DEFAULT_SCALE + defaultDotMargins * 2) * dotsCount).roundToInt()
 
         initDots()
+        initAnimators()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         startAnimation()
     }
 
@@ -54,6 +66,11 @@ class LoadingDotsView @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         //setup our view to be with size of dots plus space to scale
         setMeasuredDimension(desiredWidth, desiredHeight)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        stopAnimation()
     }
 
     private fun initDots() {
@@ -83,6 +100,14 @@ class LoadingDotsView @JvmOverloads constructor(
     }
 
     private fun startAnimation() {
+        animators.forEach { it.start() }
+    }
+
+    private fun stopAnimation() {
+        animators.forEach { it.cancel() }
+    }
+
+    private fun initAnimators() {
         children.forEachIndexed { index, view ->
             val delay = SCALE_ANIMATION_DURATION / dotsCount * index
 
@@ -106,8 +131,8 @@ class LoadingDotsView @JvmOverloads constructor(
                 }
             }
 
-            scaleAnimator.start()
-            alphaAnimator.start()
+            animators += scaleAnimator
+            animators += alphaAnimator
         }
     }
 
