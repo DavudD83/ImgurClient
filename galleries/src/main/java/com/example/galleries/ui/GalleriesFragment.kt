@@ -2,6 +2,7 @@ package com.example.galleries.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -80,7 +81,10 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
         )
 
         requireActivity().window.decorView.doOnApplyInsets { v, insets ->
-            v.setBackgroundColor(resources.getColor(R.color.dark))
+            val typedValue = TypedValue()
+            context!!.theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true)
+
+            v.setBackgroundColor(typedValue.data)
 
             val heightOfScreen =
                 v.measuredHeight - insets.systemWindowInsetTop - insets.systemWindowInsetBottom
