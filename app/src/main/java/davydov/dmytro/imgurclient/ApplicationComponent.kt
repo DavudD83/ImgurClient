@@ -3,6 +3,7 @@ package davydov.dmytro.imgurclient
 import android.content.Context
 import android.content.res.Resources
 import com.example.galleries.ViralGalleriesRouterImpl
+import com.example.gallerydetails.GalleryDetailsRouterImpl
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
@@ -11,6 +12,7 @@ import dagger.*
 import davydov.dmytro.auth.LoggedOutRouterImpl
 import davydov.dmytro.core_api.Injector
 import davydov.dmytro.core_api.ProvidersFacade
+import davydov.dmytro.core_api.routers.GalleryDetailsRouter
 import davydov.dmytro.core_api.routers.LoggedInRouter
 import davydov.dmytro.core_api.routers.LoggedOutRouter
 import davydov.dmytro.core_api.routers.ViralGalleriesRouter
@@ -60,6 +62,10 @@ abstract class RoutersBindings {
     @Binds
     @AppScope
     abstract fun viralGalleriesRouter(impl: ViralGalleriesRouterImpl): ViralGalleriesRouter
+
+    @Binds
+    @AppScope
+    abstract fun galleryDetailsRouter(impl: GalleryDetailsRouterImpl): GalleryDetailsRouter
 }
 
 @Scope

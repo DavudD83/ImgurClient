@@ -1,9 +1,12 @@
 package davydov.dmytro.auth
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationSet
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -15,6 +18,7 @@ import davydov.dmytro.core.handleEvent
 import davydov.dmytro.core_api.AppWithFacade
 import davydov.dmytro.tokens.WithTokensProvider
 import kotlinx.android.synthetic.main.fragment_logged_out.*
+import kotlinx.android.synthetic.main.fragment_logged_out.view.*
 
 class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
 
@@ -37,6 +41,16 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val scaleX =
+            ObjectAnimator.ofFloat(view.logIn, View.SCALE_X, 0.3f, 1f).apply { duration = 300L }
+        val scaleY =
+            ObjectAnimator.ofFloat(view.logIn, View.SCALE_Y, 0.3f, 1f).apply { duration = 300L }
+
+        AnimatorSet().run {
+            playTogether(scaleX, scaleY)
+            start()
+        }
 
         logIn.setOnClickListener { viewModel.onLogInClick() }
 
@@ -67,7 +81,7 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
                     setOnDismissListener { authDialog = null }
 
                     findViewById<WebView>(R.id.webView)?.run {
-                        webViewClient = object: WebViewClient() {
+                        webViewClient = object : WebViewClient() {
                             override fun onPageFinished(view: WebView, url: String) {
                                 window!!
                                     .decorView

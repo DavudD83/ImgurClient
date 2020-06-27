@@ -5,4 +5,5 @@ interface RoutersProvider {
     fun provideLoggedOutRouter(): LoggedOutRouter
     fun provideLoggedInRouter(): LoggedInRouter
     fun provideViralGalleriesRouter(): ViralGalleriesRouter
+    fun provideGalleryDetailsRouter(): GalleryDetailsRouter
 }

@@ -9,7 +9,9 @@ data class RemoteGallery(
     val views: Int,
     val ups: Int,
     val downs: Int,
-    val commentCount: Int
+    val commentCount: Int,
+    @JsonProperty("datetime")
+    val datetimeSeconds: Long
 )
 
 data class RemoteImage(

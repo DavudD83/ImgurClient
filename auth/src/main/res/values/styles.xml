@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="OAuthDialogTheme" parent="Theme.AppCompat.Dialog.Alert"/>
+    <style name="OAuthDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
 </resources>

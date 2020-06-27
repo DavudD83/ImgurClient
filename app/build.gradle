@@ -75,6 +75,7 @@ dependencies {
     implementation project(':core')
     implementation project(':local_storage')
     implementation project(':root')
-    implementation project(':galleries')
+    implementation project(':viral_galleries')
     implementation project(':core_ui')
+    implementation project(':gallery_details')
 }

@@ -1,13 +1,13 @@
 package davydov.dmytro.auth
 
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import davydov.dmytro.core_api.routers.LoggedOutRouter
 import javax.inject.Inject
 
 
 class LoggedOutRouterImpl @Inject constructor() : LoggedOutRouter {
-    override fun moveToLoggedOut(containerId: Int, fragmentManager: FragmentManager) {
-        fragmentManager.beginTransaction()
+    override fun moveToLoggedOut(containerId: Int, fragmentTransaction: FragmentTransaction) {
+        fragmentTransaction
             .replace(containerId, LoggedOutFragment.newInstance())
             .commit()
     }

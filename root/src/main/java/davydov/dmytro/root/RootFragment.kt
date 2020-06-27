@@ -3,6 +3,7 @@ package davydov.dmytro.root
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import davydov.dmytro.core.BaseFragment
 import davydov.dmytro.core_api.AppWithFacade
@@ -59,7 +60,7 @@ class RootFragment : BaseFragment<RootViewModel>(), WithTokensProvider {
             when (newState) {
                 RootViewModel.RootState.LOGGED_OUT -> {
                     if (!loggedOutAttached) {
-                        loggedOutRouter.moveToLoggedOut(R.id.container, childFragmentManager)
+                        loggedOutRouter.moveToLoggedOut(R.id.container, createTransaction())
 
                         loggedInAttached = false
                         loggedOutAttached = true
@@ -67,7 +68,7 @@ class RootFragment : BaseFragment<RootViewModel>(), WithTokensProvider {
                 }
                 RootViewModel.RootState.LOGGED_IN -> {
                     if (!loggedInAttached) {
-                        loggedInRouter.moveToLoggedIn(R.id.container, childFragmentManager)
+                        loggedInRouter.moveToLoggedIn(R.id.container, createTransaction())
 
                         loggedOutAttached = false
                         loggedInAttached = true
@@ -88,6 +89,18 @@ class RootFragment : BaseFragment<RootViewModel>(), WithTokensProvider {
     private fun restoreState(state: Bundle) {
         loggedInAttached = state.getBoolean(KEY_LOGGED_IN_ATTACHED)
         loggedOutAttached = state.getBoolean(KEY_LOGGED_OUT_ATTACHED)
+    }
+
+    private fun createTransaction(): FragmentTransaction {
+        val transaction = childFragmentManager.beginTransaction()
+
+        val currFragment = childFragmentManager.findFragmentById(R.id.container)
+
+        if (currFragment != null) {
+            transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+        }
+
+        return transaction
     }
 
     companion object {

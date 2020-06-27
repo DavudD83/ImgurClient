@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gallery_loading_error">Could not load gallery info.</string>
+    <string name="views">Views: %s</string>
+    <string name="date">Publish date: %s</string>
+</resources>

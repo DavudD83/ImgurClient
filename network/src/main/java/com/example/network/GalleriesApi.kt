@@ -1,9 +1,6 @@
 package com.example.network
 
-import com.example.network.model.GalleriesResponse
-import com.example.network.model.GallerySection
-import com.example.network.model.GallerySort
-import com.example.network.model.GalleryWindow
+import com.example.network.model.*
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,4 +15,7 @@ interface GalleriesApi {
         @Path("page") page: Int = 0,
         @Query("showViral") showViral: Boolean = true
     ): Single<GalleriesResponse>
+
+    @GET("album/{galleryId}")
+    fun loadGalleryAlbum(@Path("galleryId") id: String): Single<GalleryResponse>
 }
