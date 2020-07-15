@@ -1,6 +1,8 @@
 package com.example.core_ui
 
 import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Paint
@@ -25,8 +27,8 @@ class LoadingDotsView @JvmOverloads constructor(
     private val dotsCount: Int
     private val dotSize: Int
 
-    private val defaultDotSize = dpToPx(10)
-    private val defaultDotMargins = dpToPx(3)
+    private val defaultDotSize = dpToPx(12)
+    private val defaultDotMargins = dpToPx(4)
 
     private val desiredWidth: Int
     private val desiredHeight: Int
@@ -62,9 +64,7 @@ class LoadingDotsView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        //measure children
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //setup our view to be with size of dots plus space to scale
         setMeasuredDimension(desiredWidth, desiredHeight)
     }
 
@@ -111,24 +111,21 @@ class LoadingDotsView @JvmOverloads constructor(
         children.forEachIndexed { index, view ->
             val delay = SCALE_ANIMATION_DURATION / dotsCount * index
 
-            val scaleAnimator = ValueAnimator.ofFloat(1f, DEFAULT_SCALE).apply {
+            val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, DEFAULT_SCALE)
+            val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, DEFAULT_SCALE)
+
+            val scaleAnimator = ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY).apply {
                 duration = SCALE_ANIMATION_DURATION
                 startDelay = delay
                 repeatMode = ValueAnimator.REVERSE
                 repeatCount = ValueAnimator.INFINITE
-                addUpdateListener {
-                    view.scaleX = it.animatedValue as Float
-                    view.scaleY = it.animatedValue as Float
-                }
             }
-            val alphaAnimator = ValueAnimator.ofFloat(view.alpha, 1f).apply {
+
+            val alphaAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f).apply {
                 duration = SCALE_ANIMATION_DURATION
                 startDelay = delay
                 repeatMode = ValueAnimator.REVERSE
                 repeatCount = ValueAnimator.INFINITE
-                addUpdateListener {
-                    view.alpha = it.animatedValue as Float
-                }
             }
 
             animators += scaleAnimator

@@ -17,8 +17,6 @@
         android:layout_height="wrap_content"
 
         app:dotsColor="@android:color/white"
-        app:dotsCount="3"
-        app:dotSize="11dp"
 
         android:layout_gravity="center"
         />

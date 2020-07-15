@@ -12,7 +12,6 @@
         android:layout_margin="12dp"
 
         app:dotsColor="@android:color/white"
-        app:dotSize="11dp"
         />
 
 </FrameLayout>
