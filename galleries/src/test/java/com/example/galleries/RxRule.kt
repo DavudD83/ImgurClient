@@ -3,27 +3,24 @@ package com.example.galleries
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
-import org.junit.Rule
-import org.junit.rules.TestRule
-import org.junit.runner.Description
-import org.junit.runners.model.Statement
+import org.junit.rules.ExternalResource
 
-class RxRule : TestRule {
+class RxRule : ExternalResource() {
     private val trampolineScheduler = Schedulers.trampoline()
 
-    override fun apply(base: Statement, description: Description): Statement {
-        return object: Statement() {
-            override fun evaluate() {
-                RxAndroidPlugins.setMainThreadSchedulerHandler { trampolineScheduler }
-                RxAndroidPlugins.setInitMainThreadSchedulerHandler { trampolineScheduler }
+    override fun before() {
+        super.before()
 
-                RxJavaPlugins.setIoSchedulerHandler { trampolineScheduler }
+        RxAndroidPlugins.setMainThreadSchedulerHandler { trampolineScheduler }
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler { trampolineScheduler }
 
-                base.evaluate()
+        RxJavaPlugins.setIoSchedulerHandler { trampolineScheduler }
+    }
 
-                RxAndroidPlugins.reset()
-                RxJavaPlugins.reset()
-            }
-        }
+    override fun after() {
+        super.after()
+
+        RxAndroidPlugins.reset()
+        RxJavaPlugins.reset()
     }
 }

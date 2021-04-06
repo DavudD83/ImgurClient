@@ -7,15 +7,17 @@ import com.example.galleries.*
 import com.example.galleries.logic.Gallery
 import com.example.galleries.logic.LoadGalleriesInteractor
 import davydov.dmytro.core.Event
+import junitparams.JUnitParamsRunner
+import junitparams.Parameters
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.MockitoAnnotations
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(JUnitParamsRunner::class)
 class GalleriesViewModelTest {
 
     lateinit var viewModel: GalleriesViewModel
@@ -39,8 +41,7 @@ class GalleriesViewModelTest {
     @Rule
     val rule = InstantTaskExecutorRule()
 
-    private val thousands = "thousands"
-    private val millions = "millions"
+
 
     private val galleries = provideGalleries()
 
@@ -57,6 +58,8 @@ class GalleriesViewModelTest {
 
     @Before
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
+
         viewModel = GalleriesViewModel(resources, loadGalleriesInteractor)
 
         viewModel.showInitialLoading.observeForever(showInitialLoadingObserver)
@@ -103,44 +106,25 @@ class GalleriesViewModelTest {
     fun shouldTakeFirstImageUrlForItem_givenShowGalleries() {
         viewModel.showGalleries(galleries)
 
-        verify(galleriesObserver).onChanged(notNullArgThat { result ->
-            result.map { (it as GalleryItem).pictureUrl } == galleries.map { it.images.first().url }
-        })
+        verify(galleriesObserver).onChanged(argThat(PictureUrlMatcher(galleries)))
     }
 
     @Test
-    fun shouldShowCountsAsThousands_givenCountBiggerThan1000() {
-        val galleries = listOf(Gallery("d", "title", 1001, 1001, 1001, 130, provideImages()))
-
-        val expected = galleries.map {
-            GalleryItem(
-                it.id,
-                it.title,
-                it.images.first().url,
-                thousands,
-                thousands,
-                thousands
-            )
-        }
-
-        viewModel.showGalleries(galleries)
-
-        verify(galleriesObserver).onChanged(expected)
-    }
-
-    @Test
-    fun shouldShowCountsAsMillions_givenCountBiggerThan1_000_000() {
+    @Parameters(
+        value = ["1000, $thousands", "1000000, $millions"]
+    )
+    fun shouldShowNumbersCorrectly_givenDifferentCount(numbers: Int, expectedStr: String) {
         val galleries =
-            listOf(Gallery("d", "title", 1_000_000, 1_000_000, 1_000_000, 130, provideImages()))
+            listOf(Gallery("d", "title", numbers, numbers, numbers, 130, provideImages()))
 
         val expected = galleries.map {
             GalleryItem(
                 it.id,
                 it.title,
                 it.images.first().url,
-                millions,
-                millions,
-                millions
+                expectedStr,
+                expectedStr,
+                expectedStr
             )
         }
 
@@ -152,8 +136,8 @@ class GalleriesViewModelTest {
     @Test
     fun onShowGalleriesLoading_shouldShowGalleriesWithLoading_givenGalleriesExist() {
         val expectedGalleries = listOf(*galleryItems.toTypedArray(), NewPageLoading)
-
         viewModel.showGalleries(galleries)
+
         viewModel.showGalleriesLoading()
 
         verify(galleriesObserver).onChanged(expectedGalleries)
@@ -172,9 +156,11 @@ class GalleriesViewModelTest {
     @Test
     fun onShowLoadingError_shouldShowGalleriesWithoutLoading_givenGalleriesExist() {
         viewModel.showGalleries(galleries)
+        clearInvocations(galleriesObserver)
+
         viewModel.showLoadingError()
 
-        verify(galleriesObserver, times(2)).onChanged(galleryItems)
+        verify(galleriesObserver).onChanged(galleryItems)
     }
 
     @Test
@@ -196,5 +182,10 @@ class GalleriesViewModelTest {
         viewModel.galleriesListReachedEnd()
 
         testSubscriber.assertEmpty()
+    }
+
+    companion object {
+        private const val thousands = "thousands"
+        private const val millions = "millions"
     }
 }
