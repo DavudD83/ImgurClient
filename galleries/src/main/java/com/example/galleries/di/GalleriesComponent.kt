@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.example.galleries.logic.LoadGalleriesInteractor
 import com.example.galleries.ui.GalleriesFragment
 import com.example.galleries.ui.GalleriesViewModel
+import com.example.network.ConnectivityServiceProvider
 import com.example.network.GalleriesApiProvider
 import dagger.Component
 import dagger.Module
@@ -12,7 +13,7 @@ import davydov.dmytro.core_api.Injector
 import davydov.dmytro.core_api.ProvidersFacade
 import javax.inject.Scope
 
-@Component(dependencies = [ProvidersFacade::class, GalleriesApiProvider::class], modules = [GalleriesModule::class])
+@Component(dependencies = [ProvidersFacade::class, GalleriesApiProvider::class, ConnectivityServiceProvider::class], modules = [GalleriesModule::class])
 @GalleriesScope
 interface GalleriesComponent : Injector<GalleriesFragment>
 

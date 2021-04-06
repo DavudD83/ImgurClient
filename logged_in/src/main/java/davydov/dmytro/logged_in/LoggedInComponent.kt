@@ -1,5 +1,8 @@
 package davydov.dmytro.logged_in
 
+import android.content.Context
+import com.example.network.ConnectionStateService
+import com.example.network.ConnectivityServiceProvider
 import com.example.network.GalleriesApi
 import com.example.network.GalleriesApiProvider
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -29,10 +32,14 @@ import javax.inject.Scope
     dependencies = [ProvidersFacade::class, TokensServiceProvider::class]
 )
 @LoggedInScope
-interface LoggedInComponent : Injector<LoggedInFragment>, GalleriesApiProvider
+interface LoggedInComponent : Injector<LoggedInFragment>, GalleriesApiProvider, ConnectivityServiceProvider
 
 @Module
 class NetworkModule {
+
+    @Provides
+    @LoggedInScope
+    fun connectivityStateService(context: Context): ConnectionStateService = ConnectionStateService.create(context)
 
     @Provides
     @LoggedInScope

@@ -13,6 +13,7 @@ import com.example.core_ui.*
 import com.example.galleries.R
 import com.example.galleries.di.DaggerGalleriesComponent
 import com.example.network.WithGalleriesApiProvider
+import com.example.network.WithServiceProvider
 import davydov.dmytro.core.BaseFragment
 import davydov.dmytro.core_api.AppWithFacade
 import kotlinx.android.synthetic.main.fragment_galleries.*
@@ -34,6 +35,7 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
         DaggerGalleriesComponent.builder()
             .providersFacade((requireContext().applicationContext as AppWithFacade).facade())
             .galleriesApiProvider((parentFragment as WithGalleriesApiProvider).provider())
+            .connectivityServiceProvider((parentFragment as WithServiceProvider).serviceProvider())
             .build()
             .inject(this)
     }

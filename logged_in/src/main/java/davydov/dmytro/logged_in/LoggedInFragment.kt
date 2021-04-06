@@ -3,15 +3,14 @@ package davydov.dmytro.logged_in
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.example.network.GalleriesApiProvider
-import com.example.network.WithGalleriesApiProvider
+import com.example.network.*
 import davydov.dmytro.core.BaseFragment
 import davydov.dmytro.core_api.AppWithFacade
 import davydov.dmytro.core_api.routers.ViralGalleriesRouter
 import davydov.dmytro.tokens.WithTokensProvider
 import javax.inject.Inject
 
-class LoggedInFragment : BaseFragment<LoggedInViewModel>(), WithGalleriesApiProvider {
+class LoggedInFragment : BaseFragment<LoggedInViewModel>(), WithGalleriesApiProvider, WithServiceProvider {
 
     override val layoutId: Int
         get() = R.layout.fragment_logged_in
@@ -20,6 +19,9 @@ class LoggedInFragment : BaseFragment<LoggedInViewModel>(), WithGalleriesApiProv
 
     @Inject
     lateinit var viralGalleriesRouter: ViralGalleriesRouter
+
+    @Inject
+    lateinit var connectionStateService: ConnectionStateService
 
     private lateinit var component: LoggedInComponent
 
@@ -39,7 +41,13 @@ class LoggedInFragment : BaseFragment<LoggedInViewModel>(), WithGalleriesApiProv
         savedInstanceState ?: viralGalleriesRouter.moveToViralGalleries(R.id.container, childFragmentManager)
     }
 
+    override fun onDestroy() {
+        connectionStateService.close()
+        super.onDestroy()
+    }
+
     override fun provider(): GalleriesApiProvider = component
+    override fun serviceProvider(): ConnectivityServiceProvider = component
 
     companion object {
         fun newInstance() = LoggedInFragment()
