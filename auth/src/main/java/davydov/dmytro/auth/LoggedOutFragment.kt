@@ -67,6 +67,9 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
                     setOnDismissListener { authDialog = null }
 
                     findViewById<WebView>(R.id.webView)?.run {
+                        settings.javaScriptEnabled = true
+                        settings.domStorageEnabled = true
+
                         webViewClient = object: WebViewClient() {
                             override fun onPageFinished(view: WebView, url: String) {
                                 window!!
