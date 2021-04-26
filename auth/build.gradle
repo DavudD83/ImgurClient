@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: "$rootProject.projectDir/deps.gradle"
+
 def localProperties = new Properties()
 project.rootProject.file('local.properties').newDataInputStream().withCloseable { fileInputStream ->
     localProperties.load(fileInputStream)
@@ -12,29 +14,10 @@ def IMGUR_CLIENT_ID = localProperties['imgurClientId']
 def IMGUR_CLIENT_SECRET = localProperties['imgurClientSecret']
 
 android {
-    compileSdkVersion 29
-
-
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
-
         buildConfigField "String", "IMGUR_CLIENT_ID", IMGUR_CLIENT_ID
         buildConfigField "String", "IMGUR_CLIENT_SECRET", IMGUR_CLIENT_SECRET
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
 }
 
 dependencies {
@@ -46,13 +29,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //RxJava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-
-    def dagger_version = "2.27"
-    implementation "com.google.dagger:dagger:${dagger_version}"
-    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
+    applyDagger()
+    applyRxJava()
 
     implementation project(':core')
     implementation project(':tokens')

@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: "$rootProject.projectDir/deps.gradle"
+
 def localProperties = new Properties()
 
 project.rootProject.file('local.properties').newDataInputStream().withCloseable { inputStream ->
@@ -12,28 +14,9 @@ project.rootProject.file('local.properties').newDataInputStream().withCloseable 
 def IMGUR_CLIENT_ID = localProperties['imgurClientId']
 
 android {
-    compileSdkVersion 29
-
-
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
-
         buildConfigField "String", "IMGUR_CLIENT_ID", IMGUR_CLIENT_ID
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
 }
 
 dependencies {
@@ -45,9 +28,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    def dagger_version = "2.27"
-    implementation "com.google.dagger:dagger:${dagger_version}"
-    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
+    applyDagger()
 
     def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
@@ -55,10 +36,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-jackson:${retrofit_version}"
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation timber
 
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation material
 
     implementation project(':core')
     implementation project(':network')
