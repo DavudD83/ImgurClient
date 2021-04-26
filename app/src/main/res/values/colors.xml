@@ -3,4 +3,6 @@
     <color name="colorPrimary">@color/grey</color>
     <color name="colorPrimaryDark">#102027</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="inactive_white">#80FFFFFF</color>
 </resources>
