@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="davydov.dmytro.logged_in.LoggedInFragment" />
+    >
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="davydov.dmytro.logged_in.LoggedInFragment" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_anchor="@id/container"
+        app:layout_anchorGravity="bottom"
+        app:menu="@menu/menu_navigation"
+
+        app:layout_behavior="davydov.dmytro.logged_in.BottomNavBehavior"
+        />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -19,6 +19,12 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<VM>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory)[vmClass]
+        viewModel.onCreated(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,8 +35,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[vmClass]
         viewModel.onViewCreated()
     }
 
