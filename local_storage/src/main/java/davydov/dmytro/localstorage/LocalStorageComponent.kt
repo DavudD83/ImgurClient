@@ -6,7 +6,6 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import davydov.dmytro.core_api.ProvidersFacade
 import javax.inject.Singleton
 
 @Component(modules = [LocalStorageModule::class])

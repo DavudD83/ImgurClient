@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -70,7 +69,16 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
                         settings.javaScriptEnabled = true
                         settings.domStorageEnabled = true
 
-                        webViewClient = object: WebViewClient() {
+                        webViewClient = object : WebViewClient() {
+                            override fun onReceivedError(
+                                view: WebView?,
+                                errorCode: Int,
+                                description: String?,
+                                failingUrl: String?
+                            ) {
+                                viewModel.onWebViewError()
+                            }
+
                             override fun onPageFinished(view: WebView, url: String) {
                                 window!!
                                     .decorView
@@ -88,14 +96,6 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
                                 request: WebResourceRequest
                             ): Boolean {
                                 return viewModel.shouldOverrideUrlLoading(request.url.toString())
-                            }
-
-                            override fun onReceivedError(
-                                view: WebView?,
-                                request: WebResourceRequest?,
-                                error: WebResourceError?
-                            ) {
-                                viewModel.onWebViewError()
                             }
                         }
 
