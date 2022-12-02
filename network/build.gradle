@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 apply from: "$rootProject.projectDir/deps.gradle"
 
@@ -10,8 +11,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation retrofit
+    implementation coroutines
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx3:$coroutinesVersion"
 
     applyJackson()
     applyRxJava()
+    applyDagger()
 }

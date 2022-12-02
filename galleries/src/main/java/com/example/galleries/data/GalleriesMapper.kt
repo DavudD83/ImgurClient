@@ -3,12 +3,13 @@ package com.example.galleries.data
 import com.example.galleries.di.GalleriesScope
 import com.example.galleries.logic.Gallery
 import com.example.galleries.logic.Image
-import com.example.network.model.GalleriesResponse
+import com.example.network.model.ApiResponse
+import com.example.network.model.RemoteGallery
 import javax.inject.Inject
 
 @GalleriesScope
 class GalleriesMapper @Inject constructor() {
-    fun mapToDomain(response: GalleriesResponse): List<Gallery> {
+    fun mapToDomain(response: ApiResponse<List<RemoteGallery>>): List<Gallery> {
         return response
             .data
             .filter { it.images != null }

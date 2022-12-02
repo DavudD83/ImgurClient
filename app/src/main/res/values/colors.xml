@@ -5,4 +5,6 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="inactive_white">#80FFFFFF</color>
+
+    <color name="snackbar_background_color">#636F95</color>
 </resources>

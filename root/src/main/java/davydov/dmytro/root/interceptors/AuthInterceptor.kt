@@ -1,13 +1,13 @@
-package davydov.dmytro.logged_in.interceptors
+package davydov.dmytro.root.interceptors
 
-import davydov.dmytro.logged_in.BuildConfig
-import davydov.dmytro.logged_in.LoggedInScope
+import davydov.dmytro.root.BuildConfig
+import davydov.dmytro.root.RootScope
 import davydov.dmytro.tokens.TokensService
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-@LoggedInScope
+@RootScope
 class AuthInterceptor @Inject constructor(private val tokensService: TokensService): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

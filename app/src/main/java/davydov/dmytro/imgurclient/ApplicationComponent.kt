@@ -9,13 +9,18 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import dagger.*
 import davydov.dmytro.auth.LoggedOutRouterImpl
+import davydov.dmytro.core.StringRepositoryImpl
 import davydov.dmytro.core_api.Injector
+import davydov.dmytro.core_api.IoDispatcher
 import davydov.dmytro.core_api.ProvidersFacade
+import davydov.dmytro.core_api.StringRepository
 import davydov.dmytro.core_api.routers.LoggedInRouter
 import davydov.dmytro.core_api.routers.LoggedOutRouter
 import davydov.dmytro.core_api.routers.ViralGalleriesRouter
 import davydov.dmytro.localstorage.SharedPreferencesProvider
 import davydov.dmytro.logged_in.LoggedInRouterImpl
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Scope
 
 @Component(modules = [AppModule::class, RoutersBindings::class], dependencies = [SharedPreferencesProvider::class])
@@ -32,19 +37,33 @@ interface ApplicationComponent : Injector<ImgurClientApplication>, ProvidersFaca
 }
 
 @Module
-class AppModule {
-    @Provides
-    @AppScope
-    fun objectMapper(): ObjectMapper {
-        return ObjectMapper()
-            .registerModule(KotlinModule())
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+interface AppModule {
+
+    companion object {
+        @Provides
+        @AppScope
+        @JvmStatic
+        fun objectMapper(): ObjectMapper {
+            return ObjectMapper()
+                .registerModule(KotlinModule())
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+        }
+
+        @Provides
+        @AppScope
+        @JvmStatic
+        fun resources(context: Context): Resources = context.resources
+
+        @IoDispatcher
+        @Provides
+        @JvmStatic
+        fun ioDispatcher(): CoroutineDispatcher = Dispatchers.IO
     }
 
-    @Provides
+    @Binds
     @AppScope
-    fun resources(context: Context): Resources = context.resources
+    fun stringRepository(impl: StringRepositoryImpl): StringRepository
 }
 
 @Module

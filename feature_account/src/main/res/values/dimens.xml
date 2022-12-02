@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="user_avatar_size">50dp</dimen>
+    <dimen name="user_cover_height">150dp</dimen>
+    <dimen name="username_text_size">21sp</dimen>
+</resources>

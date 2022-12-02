@@ -1,9 +1,6 @@
 package com.example.network
 
-import com.example.network.model.GalleriesResponse
-import com.example.network.model.GallerySection
-import com.example.network.model.GallerySort
-import com.example.network.model.GalleryWindow
+import com.example.network.model.*
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,5 +14,5 @@ interface GalleriesApi {
         @Path("window") window: GalleryWindow = GalleryWindow.WEEK,
         @Path("page") page: Int = 0,
         @Query("showViral") showViral: Boolean = true
-    ): Single<GalleriesResponse>
+    ): Single<ApiResponse<List<RemoteGallery>>>
 }

@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+apply from: "$rootProject.projectDir/deps.gradle"
+
+dependencies {
+    implementation coroutines
+    implementation retrofit
+
+    applyDagger()
+
+    implementation project(":network")
+    implementation project(":core_api")
+}

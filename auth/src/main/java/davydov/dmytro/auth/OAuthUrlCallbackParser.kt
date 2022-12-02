@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 @LoggedOutScope
 class OAuthUrlCallbackParser @Inject constructor() {
-    fun parseCallback(url: String): Tokens? {
+    fun parseCallback(url: String): Pair<Tokens, String>? {
         val uri = Uri.parse(url)
 
         val results = uri.fragment
@@ -14,14 +14,18 @@ class OAuthUrlCallbackParser @Inject constructor() {
             ?.map { it.split("=") }
             ?.associateBy( { it[0] }, { it[1] } )
 
-        return if (results?.contains(ACCESS_TOKEN_KEY) == true && results.contains(
-                REFRESH_TOKEN_KEY
-            )
-        ) {
-            Tokens(
-                results[ACCESS_TOKEN_KEY]!!,
-                results[REFRESH_TOKEN_KEY]!!
-            )
+        val data = results?.run {
+            listOf(ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, USERNAME_KEY)
+                .map { key ->
+                    results.getOrDefault(key, null)
+                }
+        }
+
+        val resultsHasAllData = data?.none { it == null } == true
+
+        return if (resultsHasAllData) {
+            val (access, refresh, username) = data!!
+            Tokens(access!!, refresh!!) to username!!
         } else {
             null
         }
@@ -30,5 +34,6 @@ class OAuthUrlCallbackParser @Inject constructor() {
     companion object {
         private const val ACCESS_TOKEN_KEY = "access_token"
         private const val REFRESH_TOKEN_KEY = "refresh_token"
+        private const val USERNAME_KEY = "account_username"
     }
 }

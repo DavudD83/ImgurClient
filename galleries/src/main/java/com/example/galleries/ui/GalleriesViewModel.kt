@@ -1,6 +1,7 @@
 package com.example.galleries.ui
 
 import android.content.res.Resources
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.galleries.R
@@ -35,14 +36,9 @@ class GalleriesViewModel @Inject constructor(
 
     private var newPageError: Boolean = false
 
-    override fun onViewCreated() {
-        super.onViewCreated()
+    override fun onCreated(savedInstanceState: Bundle?) {
+        super.onCreated(savedInstanceState)
         loadGalleriesInteractor.start()
-    }
-
-    override fun onViewDestroyed() {
-        super.onViewDestroyed()
-        loadGalleriesInteractor.stop()
     }
 
     override fun showGalleriesLoading() {
@@ -83,6 +79,11 @@ class GalleriesViewModel @Inject constructor(
         }
 
         _galleries.value = galleryItems
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        loadGalleriesInteractor.stop()
     }
 
     fun galleriesListReachedEnd() {

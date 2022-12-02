@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import davydov.dmytro.core.BaseViewModel
 import davydov.dmytro.core.Event
-import davydov.dmytro.core.Optional
 import davydov.dmytro.core.sendEvent
 import davydov.dmytro.tokens.Tokens
 import io.reactivex.rxjava3.core.Single
@@ -23,9 +22,9 @@ class LoggedOutViewModel(
     private val _showAuthError = MutableLiveData<Event<String>>()
     val showAuthError: LiveData<Event<String>> = _showAuthError
 
-    private var authSubject = SingleSubject.create<Optional<Tokens>>()
+    private var authSubject = SingleSubject.create<OAuthInteractor.AuthResult>()
 
-    override fun auth(oAuthUrl: String): Single<Optional<Tokens>> {
+    override fun auth(oAuthUrl: String): Single<OAuthInteractor.AuthResult> {
         authSubject = SingleSubject.create()
 
         _showAuthPopUp.value = AuthPopupState.Shown(oAuthUrl)
@@ -46,9 +45,15 @@ class LoggedOutViewModel(
             _showAuthPopUp.value =
                 AuthPopupState.Hidden
 
-            val tokens = oAuthUrlCallbackParser.parseCallback(url)
+            val tokensWithUsername: Pair<Tokens, String>? =
+                oAuthUrlCallbackParser.parseCallback(url)
 
-            authSubject.onSuccess(Optional(tokens))
+            authSubject.onSuccess(
+                OAuthInteractor.AuthResult(
+                    tokensWithUsername?.first,
+                    tokensWithUsername?.second
+                )
+            )
         }
     }
 
@@ -59,7 +64,7 @@ class LoggedOutViewModel(
     fun onWebViewError() {
         _showAuthPopUp.value =
             AuthPopupState.Hidden
-       authSubject.onError(Throwable())
+        authSubject.onError(Throwable())
     }
 
     sealed class AuthPopupState {

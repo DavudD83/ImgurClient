@@ -7,22 +7,22 @@
     android:layout_height="match_parent"
     >
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="davydov.dmytro.logged_in.LoggedInFragment" />
+        app:navGraph="@navigation/logged_in_navigation"
+        app:defaultNavHost="true"
+        tools:context="davydov.dmytro.logged_in.LoggedInFragment"
+        tools:layout="@layout/fragment_galleries" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:layout_anchor="@id/container"
-        app:layout_anchorGravity="bottom"
+        android:layout_gravity="bottom"
         app:menu="@menu/menu_navigation"
-
-        app:layout_behavior="davydov.dmytro.logged_in.BottomNavBehavior"
-        />
+        app:layout_behavior="davydov.dmytro.logged_in.BottomNavBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

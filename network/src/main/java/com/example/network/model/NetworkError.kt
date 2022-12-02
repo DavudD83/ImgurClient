@@ -1,3 +1,5 @@
 package com.example.network.model
 
-class NetworkError : Throwable()
+import java.io.IOException
+
+class NetworkError : IOException()
