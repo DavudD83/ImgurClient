@@ -7,6 +7,7 @@ import davydov.dmytro.core_api.StringRepository
 import davydov.dmytro.data_user.domain.GetUserNameUseCase
 import davydov.dmytro.data_user.domain.LoadUserUseCase
 import davydov.dmytro.feature_account.R
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +29,11 @@ class AccountViewModel @Inject constructor(
     private val _errorMessage = MutableSharedFlow<String>()
     val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
 
+    private var loadUserJob: Job? = null
+
     private fun loadUser() {
-        viewModelScope.launch {
+        loadUserJob?.cancel()
+        loadUserJob = viewModelScope.launch {
             try {
                 val userName = getUserNameUseCase()
                 _userState.update { it.copy(name = userName) }
@@ -49,5 +53,9 @@ class AccountViewModel @Inject constructor(
                 retryWhenConnectedUseCase.handleError(error, ::loadUser)
             }
         }
+    }
+
+    fun onPullToRefresh() {
+        loadUser()
     }
 }

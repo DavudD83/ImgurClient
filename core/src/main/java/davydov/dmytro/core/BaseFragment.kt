@@ -14,7 +14,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
     protected abstract val layoutId: Int
     protected abstract val vmClass: Class<VM>
 
-    protected lateinit var viewModel: VM
+    lateinit var viewModel: VM
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<VM>

@@ -3,4 +3,9 @@
     <dimen name="user_avatar_size">50dp</dimen>
     <dimen name="user_cover_height">150dp</dimen>
     <dimen name="username_text_size">21sp</dimen>
+    <dimen name="post_height">200dp</dimen>
+    <dimen name="post_image_height">150dp</dimen>
+    <dimen name="posts_error_img_height">200dp</dimen>
+    <dimen name="posts_error_img_width">254dp</dimen>
+    <dimen name="item_post_margin">6dp</dimen>
 </resources>

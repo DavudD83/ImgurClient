@@ -5,6 +5,8 @@ import com.example.network.RetrofitProvider
 import dagger.Component
 import davydov.dmytro.core_api.ProvidersFacade
 import davydov.dmytro.data_user.di.UserDataModule
+import davydov.dmytro.feature_account.posts.di.PostsDataModule
+import davydov.dmytro.feature_account.posts.ui.PostsFragment
 import davydov.dmytro.feature_account.ui.AccountFragment
 import davydov.dmytro.localstorage.SharedPreferencesProvider
 
@@ -14,11 +16,12 @@ import davydov.dmytro.localstorage.SharedPreferencesProvider
         RetrofitProvider::class,
         SharedPreferencesProvider::class,
         ConnectivityServiceProvider::class],
-    modules = [UserDataModule::class]
+    modules = [UserDataModule::class, PostsDataModule::class]
 )
 interface AccountComponent {
 
     fun inject(fragment: AccountFragment)
+    fun inject(fragment: PostsFragment)
 
     @Component.Factory
     interface Factory {

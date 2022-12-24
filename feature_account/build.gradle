@@ -16,6 +16,11 @@ dependencies {
     implementation material
     implementation lifecycleKTX
     implementation fragmentKTX
+    implementation paging
+    implementation swipeRefreshLayout
+    implementation timber
+
+    implementation 'com.sdsmdg.harjot:materialshadows:1.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

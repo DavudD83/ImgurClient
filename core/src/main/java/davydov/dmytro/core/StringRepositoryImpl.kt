@@ -7,7 +7,7 @@ import javax.inject.Inject
 class StringRepositoryImpl @Inject constructor(private val resources: Resources) :
     StringRepository {
 
-    override fun getString(idRes: Int): String {
-        return resources.getString(idRes)
+    override fun getString(idRes: Int, vararg args: Any): String {
+        return resources.getString(idRes, *args)
     }
 }

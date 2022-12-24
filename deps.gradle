@@ -15,6 +15,9 @@ ext {
     lifecycleKTXVersion = "2.4.0"
     fragmentKTXVersion = "1.5.4"
     okHttpVersion = "4.10.0"
+    pagingVersion = "3.1.1"
+    materialShadowVersion = "1.2.5"
+    swipeRefreshLayoutVersion = "1.1.0"
 
     applyDagger = {
         dependencies {
@@ -64,6 +67,9 @@ ext {
     timber = "com.jakewharton.timber:timber:${timberVersion}"
     coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
     retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    paging = "androidx.paging:paging-runtime:$pagingVersion"
+    materialShadow = "com.sdsmdg.harjot:materialshadows:$materialShadowVersion"
+    swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
 }
 
 android {

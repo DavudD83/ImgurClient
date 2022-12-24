@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="post_background_color">#474A51</color>
+    <color name="post_privacy_text_color">#93989E</color>
+    <color name="account_toolbar_background_color">#2F3035</color>
+</resources>

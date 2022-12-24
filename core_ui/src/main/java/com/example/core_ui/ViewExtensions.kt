@@ -44,19 +44,17 @@ fun ImageView.loadImage(
     applyCircleCrop: Boolean = false,
     skipCache: Boolean = false
 ) {
-    url?.let { urlNotNull ->
-        val requestBuilder = Glide.with(this)
-            .load(url)
-        loadingPlaceholder?.let(requestBuilder::placeholder)
-        errorPlaceholder?.let(requestBuilder::error)
-        if (applyCircleCrop) {
-            requestBuilder.circleCrop()
-        }
-        if (skipCache) {
-            requestBuilder.diskCacheStrategy(DiskCacheStrategy.NONE)
-        }
-        requestBuilder.into(this)
+    val requestBuilder = Glide.with(this)
+        .load(url)
+    loadingPlaceholder?.let(requestBuilder::placeholder)
+    errorPlaceholder?.let(requestBuilder::error)
+    if (applyCircleCrop) {
+        requestBuilder.circleCrop()
     }
+    if (skipCache) {
+        requestBuilder.diskCacheStrategy(DiskCacheStrategy.NONE)
+    }
+    requestBuilder.into(this)
 }
 
 fun ViewGroup.showSnackbar(
