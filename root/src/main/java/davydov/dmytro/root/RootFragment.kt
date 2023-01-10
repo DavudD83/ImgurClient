@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import com.example.network.RetrofitProvider
+import com.example.network.WithRetrofitProvider
 import davydov.dmytro.core.BaseFragment
 import davydov.dmytro.core_api.AppWithFacade
 import davydov.dmytro.core_api.routers.LoggedInRouter
@@ -14,7 +16,7 @@ import davydov.dmytro.tokens.WithTokensProvider
 import javax.inject.Inject
 
 
-class RootFragment : BaseFragment<RootViewModel>(), WithTokensProvider {
+class RootFragment : BaseFragment<RootViewModel>(), WithTokensProvider, WithRetrofitProvider {
 
     override val layoutId: Int
         get() = R.layout.fragment_root
@@ -84,6 +86,7 @@ class RootFragment : BaseFragment<RootViewModel>(), WithTokensProvider {
     }
 
     override fun provider(): TokensServiceProvider = rootComponent
+    override fun retrofitProvider(): RetrofitProvider = rootComponent
 
     private fun restoreState(state: Bundle) {
         loggedInAttached = state.getBoolean(KEY_LOGGED_IN_ATTACHED)

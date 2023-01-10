@@ -15,5 +15,6 @@ data class RemoteGallery(
 data class RemoteImage(
     val id: String,
     @JsonProperty("link")
-    val url: String
+    val url: String,
+    val description: String?
 )

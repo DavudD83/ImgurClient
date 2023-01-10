@@ -9,9 +9,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
+import com.example.network.WithRetrofitProvider
 import davydov.dmytro.core.BaseFragment
+import davydov.dmytro.core.findParentProvider
 import davydov.dmytro.core.handleEvent
 import davydov.dmytro.core_api.AppWithFacade
+import davydov.dmytro.localstorage.AppWithSharedPrefProvider
 import davydov.dmytro.tokens.WithTokensProvider
 import kotlinx.android.synthetic.main.fragment_logged_out.*
 
@@ -28,8 +31,10 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
         super.onAttach(context)
         DaggerLoggedOutComponent
             .builder()
-            .providersFacade((requireContext().applicationContext as AppWithFacade).facade())
-            .tokensServiceProvider((parentFragment as WithTokensProvider).provider())
+            .providersFacade(findParentProvider<AppWithFacade>().facade())
+            .tokensServiceProvider(findParentProvider<WithTokensProvider>().provider())
+            .retrofitProvider(findParentProvider<WithRetrofitProvider>().retrofitProvider())
+            .sharedPreferencesProvider(findParentProvider<AppWithSharedPrefProvider>().sharedPrefProvider())
             .build()
             .inject(this)
     }
@@ -88,6 +93,7 @@ class LoggedOutFragment : BaseFragment<LoggedOutViewModel>() {
                                         duration = WEB_VIEW_ANIM_TIME
                                     }
 
+                                //account_username
                                 viewModel.onWebViewPageLoaded(url)
                             }
 

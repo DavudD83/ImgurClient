@@ -5,4 +5,5 @@ import android.content.res.Resources
 
 interface ResourcesProvider {
     fun resources(): Resources
+    fun stringRepository(): StringRepository
 }

@@ -121,7 +121,7 @@ class LoadingDotsView @JvmOverloads constructor(
                 repeatCount = ValueAnimator.INFINITE
             }
 
-            val alphaAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f).apply {
+            val alphaAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, START_ALPHA, 1f).apply {
                 duration = SCALE_ANIMATION_DURATION
                 startDelay = delay
                 repeatMode = ValueAnimator.REVERSE

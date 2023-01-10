@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/home">
+
+    <fragment android:id="@+id/home"
+        android:name="com.example.galleries.ui.GalleriesFragment"/>
+
+    <fragment android:id="@+id/account"
+        android:name="davydov.dmytro.feature_account.ui.AccountFragment"/>
+
+
+</navigation>

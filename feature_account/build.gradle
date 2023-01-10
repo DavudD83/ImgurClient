@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
+
+apply from: "$rootProject.projectDir/deps.gradle"
+
+dependencies {
+
+    applyDagger()
+
+    implementation retrofit
+    implementation coroutines
+    implementation viewModelKTX
+    implementation coreKTX
+    implementation appCompat
+    implementation material
+    implementation lifecycleKTX
+    implementation fragmentKTX
+    implementation paging
+    implementation swipeRefreshLayout
+    implementation timber
+
+    implementation 'com.sdsmdg.harjot:materialshadows:1.0.0'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    implementation project(":core")
+    implementation project(":core_ui")
+    implementation project(":network")
+    implementation project(":data_user")
+    implementation project(":local_storage")
+}

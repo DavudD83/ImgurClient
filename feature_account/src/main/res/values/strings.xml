@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="load_user_error_message">Something went wrong during account loading.</string>
+    <string name="hidden_status">hidden</string>
+    <string name="public_status">public</string>
+    <string name="initial_posts_loading_error_message">Something went wrong. Please %s</string>
+    <string name="initial_posts_loading_error_message_underscored_include">Try again</string>
+    <string name="retry_button_text">Retry</string>
+    <string name="posts_empty_message">No posts yet</string>
+</resources>

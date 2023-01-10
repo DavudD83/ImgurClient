@@ -8,11 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="bottomNavigationStyle">@style/DefaultBottomNavStyle</item>
+        <item name="snackbarStyle">@style/DefaultSnackbarStyle</item>
     </style>
 
     <style name="DefaultBottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="itemIconTint">@color/navigation_icon_color</item>
+    </style>
+
+    <style name="DefaultSnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">0dp</item>
+        <item name="backgroundTint">@color/snackbar_background_color</item>
+        <item name="animationMode">slide</item>
     </style>
 
 </resources>

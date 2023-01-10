@@ -28,14 +28,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     applyDagger()
-
-    def retrofit_version = "2.9.0"
-    implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
-    implementation "com.squareup.retrofit2:adapter-rxjava3:${retrofit_version}"
-    implementation "com.squareup.retrofit2:converter-jackson:${retrofit_version}"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+    applyNavComponent()
 
     implementation timber
+    implementation retrofit
 
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation material
@@ -43,4 +39,6 @@ dependencies {
     implementation project(':core')
     implementation project(':network')
     implementation project(':tokens')
+    implementation project(':galleries')
+    implementation project(':feature_account')
 }

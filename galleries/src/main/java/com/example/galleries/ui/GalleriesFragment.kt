@@ -14,7 +14,9 @@ import com.example.galleries.R
 import com.example.galleries.di.DaggerGalleriesComponent
 import com.example.network.WithGalleriesApiProvider
 import com.example.network.WithServiceProvider
+import com.google.android.material.transition.MaterialFadeThrough
 import davydov.dmytro.core.BaseFragment
+import davydov.dmytro.core.findParentProvider
 import davydov.dmytro.core_api.AppWithFacade
 import kotlinx.android.synthetic.main.fragment_galleries.*
 import javax.inject.Inject
@@ -31,13 +33,18 @@ class GalleriesFragment : BaseFragment<GalleriesViewModel>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         DaggerGalleriesComponent.builder()
-            .providersFacade((requireContext().applicationContext as AppWithFacade).facade())
-            .galleriesApiProvider((parentFragment as WithGalleriesApiProvider).provider())
-            .connectivityServiceProvider((parentFragment as WithServiceProvider).serviceProvider())
+            .providersFacade(findParentProvider<AppWithFacade>().facade())
+            .galleriesApiProvider(findParentProvider<WithGalleriesApiProvider>().provider())
+            .connectivityServiceProvider(findParentProvider<WithServiceProvider>().serviceProvider())
             .build()
             .inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
