@@ -87,7 +87,8 @@ class NetworkModule {
                     Timber.tag("HTTP").d(message)
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
-            .certificatePinner(certificatePinner)
+            //TODO change certificate
+//            .certificatePinner(certificatePinner)
             .readTimeout(TIMEOUT_TIME, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_TIME, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_TIME, TimeUnit.SECONDS)

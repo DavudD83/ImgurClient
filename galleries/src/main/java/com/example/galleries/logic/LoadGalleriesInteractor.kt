@@ -58,6 +58,7 @@ class LoadGalleriesInteractor @Inject constructor(
                             Flowable.error(error)
                         }
                     }
+                    .take(NUMBER_OF_RETRIES)
             }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -69,6 +70,10 @@ class LoadGalleriesInteractor @Inject constructor(
             .doFinally { loadGalleries = false }
             .toFlowable()
             .onErrorComplete()
+    }
+
+    companion object {
+        private const val NUMBER_OF_RETRIES = 3L
     }
 
     interface Listener {
